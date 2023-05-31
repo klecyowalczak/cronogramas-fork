@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-export const AppDataSource = new DataSource ({
+export const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
     port: 5432,
@@ -9,5 +9,5 @@ export const AppDataSource = new DataSource ({
     database: "cronogramas",
     synchronize: true,
     logging: true,
-    //entities: [Curso, Unidade, Turma, Aula],
+    //entities: [Curso, Unidade, Turma, Aula]
 })
