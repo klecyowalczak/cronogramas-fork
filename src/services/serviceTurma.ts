@@ -10,6 +10,10 @@ type newTurmaRequest = {
     horas_aula_dia: number
 }
 
+type findOneTurmaRequest = {
+    fk_curso: string
+}
+
 export class CreateTurmaService {
     async execute({
         fk_curso,
@@ -33,11 +37,32 @@ return turma
     }
 }
 
+export class ReadAllTurmaService {
+    async execute() {
+        const turmas = await cursor.find()
+        return turmas
+    }
+}
 
-export class ReadAllCursoService {}
-
-export class ReadOneCursoService {}
+export class ReadOneTurmaService {
+    async execute({ fk_curso }: findOneTurmaRequest) {
+        const turma = await cursor.findOne({ where: { fk_curso } })
+        if (!turma) {
+            return new Error("Turma não encontrada!")
+        }
+    return turma
+    }
+}
 
 export class UpdateCursoService {}
 
-export class DeleteCursoService {}
+export class DeleteTurmaService {
+    async execute({ fk_curso }: findOneTurmaRequest) {
+        const turma = await cursor.findOne({ where: { fk_curso } })
+        if (!turma) {
+            return new Error("Turma não encontrada!")
+        }
+    await cursor.delete(turma.id_turma)
+    return turma
+    }
+}

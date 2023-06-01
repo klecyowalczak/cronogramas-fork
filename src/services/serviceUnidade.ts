@@ -10,6 +10,10 @@ type newUnidadeRequest = {
     ordem: number
 }
 
+type findOneUnidadeRequest = {
+    fk_curso: string
+}
+
 export class CreateUnidadeService {
     async execute({
         fk_curso,
@@ -33,11 +37,32 @@ return unidade
     }
 }
 
+export class ReadAllUnidadeService {
+    async execute() {
+        const unidades = await cursor.find()
+        return unidades
+    }
+}
 
-export class ReadAllCursoService {}
-
-export class ReadOneCursoService {}
+export class ReadOneUnidadeService {
+    async execute({ fk_curso }: findOneUnidadeRequest) {
+        const unidade = await cursor.findOne({ where: { fk_curso } })
+        if (!unidade) {
+            return new Error("Unidade não encontrada!")
+        }
+    return unidade
+    }
+}
 
 export class UpdateCursoService {}
 
-export class DeleteCursoService {}
+export class DeleteUnidadeService {
+    async execute({ fk_curso }: findOneUnidadeRequest) {
+        const unidade = await cursor.findOne({ where: { fk_curso } })
+        if (!unidade) {
+            return new Error("Unidade não encontrada!")
+        }
+    await cursor.delete(unidade)
+    return unidade
+    }
+}
